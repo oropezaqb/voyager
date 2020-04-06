@@ -11,6 +11,7 @@ class CurrentCompanyController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('web');
     }
     public function index()
     {
@@ -35,7 +36,7 @@ class CurrentCompanyController extends Controller
         {
             $current_company = new CurrentCompany(['user_id' => $user->id, 'company_id' => $company->id]);
             $current_company->save();
-            return redirect(route('current_company.index'));
+            return redirect(route('home'))->with('status', 'Welcome! You may now start adding items through the navigation pane.');
         }
         else
         {

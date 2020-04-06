@@ -7,6 +7,11 @@
             <div class="card-body">
                 <div id="wrapper">
                     <div id="page" class="container">
+                        @if (session('status'))
+                            <div class="alert alert-success">
+                                {{ session('status') }}
+                            </div>
+                        @endif
                         <form method="POST" action="/current_company">
                             @csrf
                             @if (!empty($message))
@@ -25,6 +30,8 @@
                             </div>
                             <button class="btn btn-primary" type="submit">Add</button>
                         </form>
+                        <br>
+                        <p>Nothing to add? <a href="/companies/create">Create a company</a> or <a href="/applications/create">send an application</a>.</p>
                     </div>
                 </div>
             </div>

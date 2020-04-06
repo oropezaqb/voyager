@@ -31,6 +31,9 @@
                             </div>
                             <button class="btn btn-primary" type="submit">Add</button>
                         </form>
+                        <br>
+                        <p>Kindly ask for the code from the company's system admin.</p>
+                        <p>Don't have a code? Add a new company instead <a href="/companies/create">here</a>.</p>
                     </div>
                 </div>
             </div>

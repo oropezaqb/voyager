@@ -9,7 +9,7 @@ class JournalEntry extends Model
     protected $guarded = [];
     public function postings()
     {
-        return $this->hasMany(Posting::class);
+        return $this->belongsToMany(Posting::class);
     }
     public function post($posting)
     {

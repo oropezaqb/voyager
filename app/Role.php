@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     protected $guarded = [];
+    public function path()
+    {
+        return route('roles.show', $this);
+    }
     public function abilities()
     {
         return $this->belongsToMany(Ability::class)->withTimestamps();

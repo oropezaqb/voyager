@@ -10,30 +10,25 @@ class DocumentController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('company');
+        $this->middleware('web');
     }
     public function index()
     {
-        if (!empty(\Auth::user()->current_company->company))
+        $company = \Auth::user()->current_company->company;
+        if (empty(request('name')))
         {
-            $company = \Auth::user()->current_company->company;
-            if (empty(request('name')))
-            {
-                $documents = Document::where('company_id', $company->id)->latest()->get();
-            }
-            else
-            {
-                $documents = Document::where('company_id', $company->id)->where('name', 'like', '%' . request('name') . '%')->get();
-            }
-            if (\Route::currentRouteName() === 'documents.index')
-            {
-                \Request::flash();
-            }
-            return view('documents.index', compact('documents'));
+            $documents = Document::where('company_id', $company->id)->latest()->get();
         }
         else
         {
-            return redirect(route('current_company.index'));
+            $documents = Document::where('company_id', $company->id)->where('name', 'like', '%' . request('name') . '%')->get();
         }
+        if (\Route::currentRouteName() === 'documents.index')
+        {
+            \Request::flash();
+        }
+        return view('documents.index', compact('documents'));
     }
     public function show(Document $document)
     {
