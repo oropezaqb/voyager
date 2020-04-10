@@ -11,4 +11,16 @@ class Posting extends Model
     {
         return $this->belongsToMany(JournalEntry::class);
     }
+    public function account()
+    {
+        return $this->hasOne(Account::class);
+    }
+    public function subsidiaryLedger()
+    {
+        return $this->hasOne(SubsidiaryLedger::class);
+    }
+    public function reportLineItem()
+    {
+        return $this->hasOne(ReportLineItem::class);
+    }
 }

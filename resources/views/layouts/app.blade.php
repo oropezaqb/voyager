@@ -18,6 +18,16 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        div.run {
+            overflow: auto;
+            max-height: 400px;
+            width: 850px;
+            border: 0px solid;
+            border-color: rgb(192,192,192);
+            padding: 5px;
+        }
+    </style>
 </head>
 <body>
     <div id="app">

@@ -27,8 +27,7 @@ class CreateJournalEntriesTable extends Migration
                 ->onDelete('cascade');
             $table->foreign('document_type_id')
                 ->references('id')
-                ->on('documents')
-                ->onDelete('cascade');
+                ->on('documents');
             $table->timestamps();
         });
         Schema::create('postings', function (Blueprint $table) {

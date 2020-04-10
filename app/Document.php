@@ -9,7 +9,7 @@ class Document extends Model
     protected $guarded = [];
     public function journal_entries()
     {
-        return $this->belongsTo(JournalEntry::class);
+        return $this->hasMany(JournalEntry::class, 'document_type_id');
     }
     public function path()
     {

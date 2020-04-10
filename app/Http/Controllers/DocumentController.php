@@ -74,7 +74,14 @@ class DocumentController extends Controller
     }
     public function destroy(Document $document)
     {
-        $document->delete();
-        return redirect(route('documents.index'));
+        try
+        {
+            $document->delete();
+            return redirect(route('documents.index'));
+        }
+        catch(\Illuminate\Database\QueryException $ex)
+        {
+            return back()->with('status', $ex->getMessage());
+        }
     }
 }

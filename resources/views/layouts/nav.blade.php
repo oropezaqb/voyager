@@ -22,6 +22,9 @@
             <a class="nav-link {{ Request::is('documents*') ? 'active' : ''}}" href="/documents">Documents</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link {{ Request::is('queries*') ? 'active' : ''}}" href="/queries">Queries</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link {{ Request::is('company_users*') ? 'active' : ''}}" href="/company_users">Company Users</a>
         </li>
         <li class="nav-item">

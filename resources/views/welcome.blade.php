@@ -50,6 +50,13 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            div.run {
+                overflow: auto;
+                max-height: 50px;
+                width: 600px;
+                border: 1px solid;
+                padding: 5px;
+            }
         </style>
     </head>
     <body>

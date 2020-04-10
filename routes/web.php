@@ -33,6 +33,8 @@ Route::resources([
     'postings' => 'PostingController',
     'roles' => 'RoleController',
     'abilities' => 'AbilityController',
+    'queries' => 'QueryController',
+    'reports' => 'ReportController',
 ]);
 
 Route::get('/company_users', 'CompanyUserController@index')->name('company_users.index');
@@ -41,3 +43,8 @@ Route::get('/company_users/add', 'CompanyUserController@add')->name('company_use
 Route::get('/company_users/{company_user}', 'CompanyUserController@show')->name('company_users.show');
 Route::get('/company_users/{company_user}/edit', 'CompanyUserController@edit')->name('company_users.edit');
 Route::put('/company_users/{company_user}', 'CompanyUserController@update')->name('company_users.update');
+
+Route::post('queries/{query}/run', 'QueryController@run')->name('queries.run');
+Route::post('reports/{query}/screen', 'ReportController@screen')->name('reports.screen');
+Route::post('reports/{query}/pdf', 'ReportController@pdf')->name('reports.pdf');
+Route::post('reports/{query}/csv', 'ReportController@csv')->name('reports.csv');
