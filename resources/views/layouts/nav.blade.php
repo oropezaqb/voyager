@@ -1,4 +1,4 @@
-<div class="col-md-2">
+<div class="sidebar col-md-2">
     <ul class="nav nav-pills flex-column">
         <li class="nav-item">
             <a class="nav-link {{ Request::path() === 'home' ? 'active' : ''}}" href="/home">Home</a>

@@ -87,4 +87,9 @@ class QueryController extends Controller
             return view('queries.run', compact('query', 'stmt', 'headings'));
         }
     }
+    public function destroy(Query $query)
+    {
+        $query->delete();
+        return redirect(route('queries.index'));
+    }
 }

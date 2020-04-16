@@ -120,9 +120,10 @@ function html($title, $stmt, $headings = null) {
 }
 
 function csv($stmt, $convertUTF8 = false) {
-    $dir = 'output'; // previously created
-    $output_file = "$dir/" . date('Y-m-d') . '-' .
+    $dir = '/var/www/html/voyager/storage/app/public/output'; // previously created
+    $fileName = date('Y-m-d') . '-' .
       uniqid() . '.csv';
+    $output_file = "$dir/" . "$fileName";
 
     $output = fopen($output_file, "w");
     $ncols = $stmt->columnCount();
@@ -146,11 +147,9 @@ function csv($stmt, $convertUTF8 = false) {
             fputcsv($output, $row);
     }
     fclose($output);
-    echo "<p>File to download:
-      <a href='$output_file'><b>$output_file</b></a>";
-    echo "<p>(Control-click or right-click and choose
-      \"Save Link As...\", \"Download Linked File\",
-      or equivalent.)";
+    $url = "http://" . env('HTTP_HOST') .
+      "/storage/output" . "/$fileName";
+    return $url;
 }
 
 function htmlspecial($s) {

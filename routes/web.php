@@ -34,7 +34,6 @@ Route::resources([
     'roles' => 'RoleController',
     'abilities' => 'AbilityController',
     'queries' => 'QueryController',
-    'reports' => 'ReportController',
 ]);
 
 Route::get('/company_users', 'CompanyUserController@index')->name('company_users.index');
@@ -48,3 +47,6 @@ Route::post('queries/{query}/run', 'QueryController@run')->name('queries.run');
 Route::post('reports/{query}/screen', 'ReportController@screen')->name('reports.screen');
 Route::post('reports/{query}/pdf', 'ReportController@pdf')->name('reports.pdf');
 Route::post('reports/{query}/csv', 'ReportController@csv')->name('reports.csv');
+Route::post('reports/{query}/run', 'ReportController@run')->name('reports.run');
+Route::post('reports/trial_balance', 'ReportController@trial_balance')->name('reports.trial_balance');
+Route::get('/reports', 'ReportController@index')->name('reports.index');

@@ -27,6 +27,21 @@
             border-color: rgb(192,192,192);
             padding: 5px;
         }
+        div.sidebar {
+            overflow: auto;
+            max-height: 520px;
+        }
+        nav.navbar {
+            position: sticky; 
+            top: 0; 
+            right: 0; 
+            left: 0; 
+            z-index: 2;
+        }
+        div.card {
+            overflow: auto;
+            max-height: 520px;
+        }
     </style>
 </head>
 <body>

@@ -10,6 +10,13 @@
                         id="page"
                         class="container"
                     >
+                        <h6 class="font-weight-bold">Accounting</h6>
+                            <div style="display:inline-block;"><form method="POST" action="/reports/trial_balance">
+                                @csrf
+                                <button class="btn btn-link" type="submit">Generate</button>
+                            </form></div>
+                            <div style="display:inline-block;">&nbsp;&nbsp;<span>Trial Balance</span></div>
+                        <h6 class="font-weight-bold">Others</h6>
                         @forelse ($queries as $query)
                             <div id="query">
                                 <div style="display:inline-block;"><form method="POST" action="/reports/{{ $query->id }}/screen">
@@ -24,7 +31,7 @@
                                     @csrf
                                     <button class="btn btn-link" type="submit">CSV</button>
                                 </form></div>
-                                <div style="display:inline-block;">&nbsp;&nbsp;{{ $query->title }}: {{ $query->query }}</div>
+                                <div style="display:inline-block;">&nbsp;&nbsp;{{ $query->title }}</div>
                             </div>
                         @empty
                             <p>No reports available.</p>
