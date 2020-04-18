@@ -1,0 +1,8 @@
+<?php
+
+namespace App\Accommodation;
+
+
+class ReservationValidator
+{
+}
