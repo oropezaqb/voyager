@@ -17,16 +17,12 @@ class AccountController extends Controller
     public function index()
     {
         $company = \Auth::user()->current_company->company;
-        if (empty(request('title')))
-        {
+        if (empty(request('title'))) {
             $accounts = Account::where('company_id', $company->id)->latest()->get();
-        }
-        else
-        {
+        } else {
             $accounts = Account::where('company_id', $company->id)->where('title', 'like', '%' . request('title') . '%')->get();
         }
-        if (\Route::currentRouteName() === 'accounts.index')
-        {
+        if (\Route::currentRouteName() === 'accounts.index') {
             \Request::flash();
         }
         return view('accounts.index', compact('accounts'));
@@ -37,8 +33,7 @@ class AccountController extends Controller
     }
     public function create()
     {
-        if (\Route::currentRouteName() === 'accounts.create')
-        {
+        if (\Route::currentRouteName() === 'accounts.create') {
             \Request::flash();
         }
         return view('accounts.create');
@@ -48,8 +43,7 @@ class AccountController extends Controller
         $this->validateAccount();
         $company = \Auth::user()->current_company->company;
         $subsidiary_ledger = true;
-        if (empty(request('subsidiary_ledger')))
-        {
+        if (empty(request('subsidiary_ledger'))) {
             $subsidiary_ledger = false;
         }
         $account = new Account([
@@ -64,8 +58,7 @@ class AccountController extends Controller
     }
     public function edit(Account $account)
     {
-        if (\Route::currentRouteName() === 'accounts.edit')
-        {
+        if (\Route::currentRouteName() === 'accounts.edit') {
             \Request::flash();
         }
         return view('accounts.edit', compact('account'));
@@ -74,8 +67,7 @@ class AccountController extends Controller
     {
         $this->validateAccount();
         $subsidiary_ledger = true;
-        if (empty(request('subsidiary_ledger')))
-        {
+        if (empty(request('subsidiary_ledger'))) {
             $subsidiary_ledger = false;
         }
         $account->update([

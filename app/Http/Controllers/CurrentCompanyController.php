@@ -32,14 +32,11 @@ class CurrentCompanyController extends Controller
         $this->validateCurrentCompany();
         $company = Company::where('id', request('company_id'))->firstOrFail();
         $user = \Auth::user();
-        if (empty($user->current_company))
-        {
+        if (empty($user->current_company)) {
             $current_company = new CurrentCompany(['user_id' => $user->id, 'company_id' => $company->id]);
             $current_company->save();
             return redirect(route('home'))->with('status', 'Welcome! You may now start adding items through the navigation pane.');
-        }
-        else
-        {
+        } else {
             $companies = \Auth::user()->companies;
             \Request::flash();
             $message = "Cannot add another company as current. You may update your current company instead.";

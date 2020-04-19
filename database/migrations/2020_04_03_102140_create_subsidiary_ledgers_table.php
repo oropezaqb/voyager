@@ -34,6 +34,6 @@ class CreateSubsidiaryLedgersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subsidiary_ledgers');
+
     }
 }

@@ -19,16 +19,12 @@ class SubsidiaryLedgerController extends Controller
         //{
 
         $company = \Auth::user()->current_company->company;
-        if (empty(request('name')))
-        {
+        if (empty(request('name'))) {
             $subsidiary_ledgers = SubsidiaryLedger::where('company_id', $company->id)->latest()->get();
-        }
-        else
-        {
+        } else {
             $subsidiary_ledgers = SubsidiaryLedger::where('company_id', $company->id)->where('name', 'like', '%' . request('name') . '%')->get();
         }
-        if (\Route::currentRouteName() === 'subsidiary_ledgers.index')
-        {
+        if (\Route::currentRouteName() === 'subsidiary_ledgers.index') {
             \Request::flash();
         }
         return view('subsidiary_ledgers.index', compact('subsidiary_ledgers'));
@@ -45,8 +41,7 @@ class SubsidiaryLedgerController extends Controller
     }
     public function create()
     {
-        if (\Route::currentRouteName() === 'subsidiary_ledgers.create')
-        {
+        if (\Route::currentRouteName() === 'subsidiary_ledgers.create') {
             \Request::flash();
         }
         return view('subsidiary_ledgers.create');
@@ -65,8 +60,7 @@ class SubsidiaryLedgerController extends Controller
     }
     public function edit(SubsidiaryLedger $subsidiary_ledger)
     {
-        if (\Route::currentRouteName() === 'subsidiary_ledgers.edit')
-        {
+        if (\Route::currentRouteName() === 'subsidiary_ledgers.edit') {
             \Request::flash();
         }
         return view('subsidiary_ledgers.edit', compact('subsidiary_ledger'));

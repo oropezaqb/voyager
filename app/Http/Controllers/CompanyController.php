@@ -17,12 +17,9 @@ class CompanyController extends Controller
     }
     public function index()
     {
-        if (empty(request('name')))
-        {
+        if (empty(request('name'))) {
             $companies = \Auth::user()->companies()->latest()->get();
-        }
-        else
-        {
+        } else {
             $companies = \Auth::user()->companies()->where('name', 'like', '%' . request('name') . '%')->get();
         }
         \Request::flash();
@@ -40,7 +37,7 @@ class CompanyController extends Controller
     {
         $this->validateCompany();
         $company = new Company(request(['name']));
-        $company->code = substr(md5(microtime()),rand(0,26),6);
+        $company->code = substr(md5(microtime()), rand(0, 26), 6);
         $company->save();
         $user = \Auth::user();
         $company->employ($user);

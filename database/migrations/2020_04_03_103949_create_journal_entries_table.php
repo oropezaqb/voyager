@@ -74,6 +74,6 @@ class CreateJournalEntriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('journal_entries');
+
     }
 }

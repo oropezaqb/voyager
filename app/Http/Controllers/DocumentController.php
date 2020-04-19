@@ -16,16 +16,12 @@ class DocumentController extends Controller
     public function index()
     {
         $company = \Auth::user()->current_company->company;
-        if (empty(request('name')))
-        {
+        if (empty(request('name'))) {
             $documents = Document::where('company_id', $company->id)->latest()->get();
-        }
-        else
-        {
+        } else {
             $documents = Document::where('company_id', $company->id)->where('name', 'like', '%' . request('name') . '%')->get();
         }
-        if (\Route::currentRouteName() === 'documents.index')
-        {
+        if (\Route::currentRouteName() === 'documents.index') {
             \Request::flash();
         }
         return view('documents.index', compact('documents'));
@@ -36,8 +32,7 @@ class DocumentController extends Controller
     }
     public function create()
     {
-        if (\Route::currentRouteName() === 'documents.create')
-        {
+        if (\Route::currentRouteName() === 'documents.create') {
             \Request::flash();
         }
         return view('documents.create');
@@ -55,8 +50,7 @@ class DocumentController extends Controller
     }
     public function edit(Document $document)
     {
-        if (\Route::currentRouteName() === 'documents.edit')
-        {
+        if (\Route::currentRouteName() === 'documents.edit') {
             \Request::flash();
         }
         return view('documents.edit', compact('document'));
@@ -74,13 +68,10 @@ class DocumentController extends Controller
     }
     public function destroy(Document $document)
     {
-        try
-        {
+        try {
             $document->delete();
             return redirect(route('documents.index'));
-        }
-        catch(\Illuminate\Database\QueryException $ex)
-        {
+        } catch (\Illuminate\Database\QueryException $ex) {
             return back()->with('status', $ex->getMessage());
         }
     }

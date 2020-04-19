@@ -15,12 +15,9 @@ class AbilityController extends Controller
     }
     public function index()
     {
-        if (empty(request('name')))
-        {
+        if (empty(request('name'))) {
             $abilities = Ability::latest()->get();
-        }
-        else
-        {
+        } else {
             $abilities = Ability::where('name', 'like', '%' . request('name') . '%')->get();
         }
         \Request::flash();

@@ -15,12 +15,9 @@ class ApplicationController extends Controller
     }
     public function index()
     {
-        if (empty(request('code')))
-        {
+        if (empty(request('code'))) {
             $applications = \Auth::user()->applications()->latest()->get();
-        }
-        else
-        {
+        } else {
             $company = Company::where('code', request('code'))->firstOrFail();
             $applications = \Auth::user()->applications()->where('company_id', $company->id)->get();
         }
@@ -40,23 +37,17 @@ class ApplicationController extends Controller
         $this->validateApplication();
         $company = Company::where('code', request('code'))->firstOrFail();
         $user = \Auth::user();
-        if ($user->applications()->where('company_id', $company->id)->count() == 0)
-        {
-            if ($user->companies()->where('company_id', $company->id)->count() == 0)
-            {
+        if ($user->applications()->where('company_id', $company->id)->count() == 0) {
+            if ($user->companies()->where('company_id', $company->id)->count() == 0) {
                 $application = new Application(['user_id' => $user->id, 'company_id' => $company->id]);
                 $application->save();
                 return redirect(route('applications.index'));
-            }
-            else
-            {
+            } else {
                 \Request::flash();
                 $message = "You are already an authorized user in this company.";
                 return view('applications.create', ['message' => $message]);
             }
-        }
-        else
-        {
+        } else {
             \Request::flash();
             $message = "An application has already been filed with this company.";
             return view('applications.create', ['message' => $message]);

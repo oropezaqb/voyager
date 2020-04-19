@@ -19,16 +19,12 @@ class ReportLineItemController extends Controller
         //{
 
         $company = \Auth::user()->current_company->company;
-        if (empty(request('line_item')))
-        {
+        if (empty(request('line_item'))) {
             $reportLineItems = ReportLineItem::where('company_id', $company->id)->latest()->get();
-        }
-        else
-        {
+        } else {
             $reportLineItems = ReportLineItem::where('company_id', $company->id)->where('line_item', 'like', '%' . request('line_item') . '%')->get();
         }
-        if (\Route::currentRouteName() === 'report_line_items.index')
-        {
+        if (\Route::currentRouteName() === 'report_line_items.index') {
             \Request::flash();
         }
         return view('report_line_items.index', compact('reportLineItems'));
@@ -45,8 +41,7 @@ class ReportLineItemController extends Controller
     }
     public function create()
     {
-        if (\Route::currentRouteName() === 'report_line_items.create')
-        {
+        if (\Route::currentRouteName() === 'report_line_items.create') {
             \Request::flash();
         }
         return view('report_line_items.create');
@@ -66,8 +61,7 @@ class ReportLineItemController extends Controller
     }
     public function edit(ReportLineItem $reportLineItem)
     {
-        if (\Route::currentRouteName() === 'report_line_items.edit')
-        {
+        if (\Route::currentRouteName() === 'report_line_items.edit') {
             \Request::flash();
         }
         return view('report_line_items.edit', compact('reportLineItem'));

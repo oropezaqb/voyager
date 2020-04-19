@@ -35,6 +35,6 @@ class CreateReportLineItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('report_line_items');
+
     }
 }

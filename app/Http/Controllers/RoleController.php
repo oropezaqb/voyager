@@ -16,13 +16,10 @@ class RoleController extends Controller
     }
     public function index()
     {
-        if(empty(request('name')))
-        {
+        if (empty(request('name'))) {
             $company = \Auth::user()->current_company->company()->firstOrFail();
             $roles = Role::where('company_id', $company->id)->get();
-        }
-        else
-        {
+        } else {
             $company = \Auth::user()->current_company->company()->firstOrFail();
             $roles = Role::where('company_id', $company->id)->where('name', 'like', '%' . request('name') . '%')->get();
         }
@@ -46,10 +43,8 @@ class RoleController extends Controller
         $role = new Role(['name' => request('name'), 'company_id' => $company->id]);
         $role->save();
         $abilities = $request->input('ability');
-        if (isset($abilities))
-        {
-            foreach ($abilities as $ability)
-            {
+        if (isset($abilities)) {
+            foreach ($abilities as $ability) {
                 $role->allowTo(Ability::find($ability));
             }
         }
@@ -66,10 +61,8 @@ class RoleController extends Controller
         $role->update($this->validateRole());
         $abilities = $request->input('ability');
         $role->abilities()->detach();
-        if (isset($abilities))
-        {
-            foreach ($abilities as $ability)
-            {
+        if (isset($abilities)) {
+            foreach ($abilities as $ability) {
                 $role->allowTo(Ability::find($ability));
             }
         }

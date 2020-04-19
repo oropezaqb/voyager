@@ -23,16 +23,12 @@ class JournalEntryController extends Controller
     public function index()
     {
         $company = \Auth::user()->current_company->company;
-        if (empty(request('explanation')))
-        {
+        if (empty(request('explanation'))) {
             $journalEntries = JournalEntry::where('company_id', $company->id)->latest()->get();
-        }
-        else
-        {
+        } else {
             $journalEntries = JournalEntry::where('company_id', $company->id)->where('explanation', 'like', '%' . request('explanation') . '%')->get();
         }
-        if (\Route::currentRouteName() === 'journal_entries.index')
-        {
+        if (\Route::currentRouteName() === 'journal_entries.index') {
             \Request::flash();
         }
         return view('journal_entries.index', compact('journalEntries'));
@@ -58,7 +54,7 @@ class JournalEntryController extends Controller
     public function store(Request $request)
     {
         $messages = [
-            'document_type_id.required' => 'The document type field is required.', 
+            'document_type_id.required' => 'The document type field is required.',
             'document_type_id.exists' => 'The selected document type is invalid. Please choose among the recommended items.',
             'document_number.min' => 'The document number must be a positive number.',
             "postings.'account_id'.min" => 'There must be at least two account titles',
@@ -77,8 +73,8 @@ class JournalEntryController extends Controller
             "postings.'account_id'" => ['sometimes', 'min:2'],
             "postings.'account_id'.*" => [
                 'bail',
-                'sometimes', 
-                'required', 
+                'sometimes',
+                'required',
                 'exists:App\Account,id'
             ],
             "postings.'debit'.*" => ['sometimes', 'numeric', 'min:0.01', 'nullable'],
@@ -93,19 +89,17 @@ class JournalEntryController extends Controller
                     if ((is_null(request("postings.'debit'.".$x)) && is_null(request("postings.'credit'.".$x))) || (!is_null(request("postings.'debit'.".$x)) && !is_null(request("postings.'credit'.".$x)))) {
                         $validator->errors()->add('postings', 'Line ' . ($x + 1) . ' must have either a debit or a credit (not both).');
                     }
-                    if (Account::all()->contains(request("postings.'account_id'.".$x)))
-                    {
-                        if ((Account::find(request("postings.'account_id'.".$x))->subsidiary_ledger == TRUE) && (is_null(request("postings.'subsidiary_ledger_id'.".$x)))) {
+                    if (Account::all()->contains(request("postings.'account_id'.".$x))) {
+                        if ((Account::find(request("postings.'account_id'.".$x))->subsidiary_ledger == true) && (is_null(request("postings.'subsidiary_ledger_id'.".$x)))) {
                             $validator->errors()->add('postings', 'Line ' . ($x + 1) . ' requires a subsidiary ledger.');
                         }
                         $account = Account::find(request("postings.'account_id'.".$x));
-                        if (($account->type == '110 - Cash and Cash Equivalents' || 
+                        if (($account->type == '110 - Cash and Cash Equivalents' ||
                              $account->type == '310 - Capital' ||
                              $account->type == '320 - Share Premium' ||
                              $account->type == '330 - Retained Earnings' ||
                              $account->type == '340 - Other Comprehensive Income')
-                             && (is_null(request("postings.'report_line_item_id'.".$x)))) 
-                        {
+                             && (is_null(request("postings.'report_line_item_id'.".$x)))) {
                             $validator->errors()->add('postings', 'Line ' . ($x + 1) . ' requires a report line item.');
                         }
                     }
@@ -130,8 +124,7 @@ class JournalEntryController extends Controller
         ]);
         $journalEntry->save();
         if (!is_null(request("postings.'account_id'"))) {
-            for ($row = 0; $row < count(request("postings.'account_id'")); $row++)
-            {
+            for ($row = 0; $row < count(request("postings.'account_id'")); $row++) {
                 $debit = request("postings.'debit'.".$row) - request("postings.'credit'.".$row);
                 $posting = new Posting([
                     'account_id' => request("postings.'account_id'.".$row),
@@ -157,7 +150,7 @@ class JournalEntryController extends Controller
     public function update(Request $request, JournalEntry $journalEntry)
     {
         $messages = [
-            'document_type_id.required' => 'The document type field is required.', 
+            'document_type_id.required' => 'The document type field is required.',
             'document_type_id.exists' => 'The selected document type is invalid. Please choose among the recommended items.',
             'document_number.min' => 'The document number must be a positive number.',
             "postings.'account_id'.min" => 'There must be at least two account titles.',
@@ -175,8 +168,8 @@ class JournalEntryController extends Controller
             'explanation' => ['required'],
             "postings.'account_id'" => ['sometimes', 'min:2'],
             "postings.'account_id'.*" => [
-                'sometimes', 
-                'required', 
+                'sometimes',
+                'required',
                 'exists:App\Account,id'
             ],
             "postings.'debit'.*" => ['sometimes', 'numeric', 'min:0.01', 'nullable'],
@@ -191,19 +184,17 @@ class JournalEntryController extends Controller
                     if ((is_null(request("postings.'debit'.".$x)) && is_null(request("postings.'credit'.".$x))) || (!is_null(request("postings.'debit'.".$x)) && !is_null(request("postings.'credit'.".$x)))) {
                         $validator->errors()->add('postings', 'Line ' . ($x + 1) . ' must have either a debit or a credit (not both).');
                     }
-                    if (Account::all()->contains(request("postings.'account_id'.".$x)))
-                    {
-                        if ((Account::find(request("postings.'account_id'.".$x))->subsidiary_ledger == TRUE) && (is_null(request("postings.'subsidiary_ledger_id'.".$x)))) {
+                    if (Account::all()->contains(request("postings.'account_id'.".$x))) {
+                        if ((Account::find(request("postings.'account_id'.".$x))->subsidiary_ledger == true) && (is_null(request("postings.'subsidiary_ledger_id'.".$x)))) {
                             $validator->errors()->add('postings', 'Line ' . ($x + 1) . ' requires a subsidiary ledger.');
                         }
                         $account = Account::find(request("postings.'account_id'.".$x));
-                        if (($account->type == '110 - Cash and Cash Equivalents' || 
+                        if (($account->type == '110 - Cash and Cash Equivalents' ||
                              $account->type == '310 - Capital' ||
                              $account->type == '320 - Share Premium' ||
                              $account->type == '330 - Retained Earnings' ||
                              $account->type == '340 - Other Comprehensive Income')
-                             && (is_null(request("postings.'report_line_item_id'.".$x)))) 
-                        {
+                             && (is_null(request("postings.'report_line_item_id'.".$x)))) {
                             $validator->errors()->add('postings', 'Line ' . ($x + 1) . ' requires a report line item.');
                         }
                     }
@@ -232,8 +223,7 @@ class JournalEntryController extends Controller
             $posting->delete();
         }
         if (!is_null(request("postings.'account_id'"))) {
-            for ($row = 0; $row < count(request("postings.'account_id'")); $row++)
-            {
+            for ($row = 0; $row < count(request("postings.'account_id'")); $row++) {
                 $debit = request("postings.'debit'.".$row) - request("postings.'credit'.".$row);
                 $posting = new Posting([
                     'account_id' => request("postings.'account_id'.".$row),
